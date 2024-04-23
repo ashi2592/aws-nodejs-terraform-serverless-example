@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  SERVICENAME: 
+    Type: String
+    Default: "demo-service"
+  SERVICENAME2:
+    Type: String
+    Default: "demo-service3"
+
+Resources:
+  MyLambdaFunction1:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: my-bucket
+        S3Key: myservices/lambda1.zip
+      Handler: demo-service/index.handler
+      Runtime: nodejs18.x
+      Role: arn:aws:iam::123456789012:role/lambda-role
+
+  MyLambdaFunction2:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: my-bucket
+        S3Key: myservices/lambda2.zip
+      Handler: demo-service2/index.handler
+      Runtime: nodejs18.x
+      Role: arn:aws:iam::123456789012:role/lambda-role
+
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - Label:
+          default: ap-south-1
+        Parameters:
+          - EnvironmentVariable1
+          - EnvironmentVariable2
+    ParameterLabels:
+      EnvironmentVariable1:
+        default: Enter the value for Environment Variable 1
+      EnvironmentVariable2:
+        default: Enter the value for Environment Variable 2
